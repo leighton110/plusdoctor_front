@@ -4,7 +4,7 @@ import axios from 'axios';
 class Login extends Component {
   state = {
     username: '',
-    pwd: '',
+    password: '',
     loginType: 'user',
   };
 
@@ -21,8 +21,13 @@ class Login extends Component {
     });
   };
   login = async (e) => {
-    const { username, pwd, loginType } = this.state;
-    await axios.post(`http://localhost:4000/login/${loginType}`, { username, pwd });
+    const { username, password, loginType } = this.state;
+    // await axios.post(`http://localhost:4000/auth/${loginType}`, { username, password });
+    await axios(`http://localhost:4000/login/${loginType}`, {
+      method: 'post',
+      data: { username, password },
+      withCredentials: true,
+    });
   };
 
   render() {
@@ -36,7 +41,7 @@ class Login extends Component {
         />
         <input
           type="password"
-          name="pwd"
+          name="password"
           placeholder="비밀번호를 입력해주세요."
           onChange={this.handleChange}
         />
